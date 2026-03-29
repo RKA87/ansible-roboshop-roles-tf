@@ -1,0 +1,7 @@
+- name: "Configure the Roboshop Application in Dev Environment"
+  hosts: all
+  become: true
+  tasks:
+    - name: "configure the {{ component }} component"
+      roles:
+        name: "{{ component }}"
