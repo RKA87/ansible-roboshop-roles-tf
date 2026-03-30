@@ -1,0 +1,5 @@
+- name: restart {{ component}} service
+  ansible.builtin.systemd:
+    name: "{{ component }}"
+    state: restarted
+    enabled: true

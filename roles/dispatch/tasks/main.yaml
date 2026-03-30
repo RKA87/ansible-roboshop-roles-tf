@@ -1,0 +1,21 @@
+- name: "App setup for {{ component }}"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-setup.yaml
+
+- name: "Install Golang and its dependencies for {{ component }}"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: golan-setup.yaml
+
+  
+- name: "Setup systemd service for {{ component }}"
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: systemd-setup.yaml
+
+- name: "Enable and Start {{ component }} service"
+  ansible.builtin.systemd:
+    name: "{{ component }}"
+    enabled: true
+    state: started

@@ -1,0 +1,14 @@
+- name: "Install GoLanga and its dependencies for {{ component }}"
+  become: true
+  ansible.builtin.dnf:
+    name: golang
+    state: present
+
+- name: "Install the dependencies under app directory for {{ component }}"
+  ansible.builtin.command: "{{ item }}"
+  args:
+    chdir: /app
+  loop:
+  - go mod init {{ component }}
+  - go get
+  - go build
