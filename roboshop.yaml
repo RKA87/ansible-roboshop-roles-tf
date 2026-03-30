@@ -1,7 +1,9 @@
 - name: "Configure the Roboshop Application in Dev Environment"
-  hosts: all
+  hosts: "{{ component }}"
   become: true
   tasks:
-    - name: "configure the {{ component }} component"
-      roles:
-        name: "{{ component }}"
+    - name: "Display Message"
+      ansible.builtin.debug:
+        msg: "Configuring the {{ component }} component in Dev Environment"
+  roles:
+  - "{{ component }}"

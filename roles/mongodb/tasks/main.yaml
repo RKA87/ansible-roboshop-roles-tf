@@ -1,0 +1,33 @@
+- name: setup the mongodb repository
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: "/etc/yum.repos.d/mongodb.repo"
+
+- name: "display message about installing mongodb"
+  ansible.builtin.debug:
+    msg: "Successfully copied the mongodb.repo file to /etc/yum.repos.d/mongodb.repo"
+
+- name: install mongodb-org package
+  ansible.builtin.dnf:
+    name: mongodb-org
+    state: present
+  
+- name: "allowing the remote connections to mongodb"
+  ansible.builtin.replace:
+    path: "/etc/mongod.conf"
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+  
+- name: "display message about allowing the remote connections to mongodb"
+  ansible.builtin.debug:
+    msg: "Successfully allowed the remote connections to mongodb by replacing 127.0.0.1 with 0.0.0.0"
+
+- name: start and enable mongod service
+  ansible.builtin.service:
+    name: mongod
+    state: started
+    enabled: true
+
+- name: "display message about starting and enabling mongod service"
+  ansible.builtin.debug:
+    msg: "Successfully started and enabled mongod service"
